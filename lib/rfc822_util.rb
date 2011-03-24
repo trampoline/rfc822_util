@@ -1,5 +1,6 @@
 require 'action_mailer'
 require 'tmail'
+require 'base64'
 
 module Rfc822Util
   class << self
@@ -15,7 +16,7 @@ module Rfc822Util
   module_function
 
   # extract the first message/rfc822 attachment from the RFC822 encoded content, and return it as a TMail::Mail
-  # if +headers_only+ is true then message content will be discarded, and only headers processed
+  # if +strip_content+ is true then message content will be discarded, and only headers processed
   def extract_journalled_mail(mail, strip_content=true)
     journal_mail = TMail::Mail.parse(mail) if mail.is_a?(String)
     
@@ -68,7 +69,8 @@ module Rfc822Util
     end.compact
   end
 
-  # turn a TMail::Mail into a has suitable for JSON representation
+  # turn a TMail::Mail into a hash suitable for JSON representation
+  # if strip_content is true then neither subject nor body will be present
   def mail_to_hash(mail, strip_content=true)
     mail = TMail::Mail.parse(mail) if mail.is_a?(String)
 
