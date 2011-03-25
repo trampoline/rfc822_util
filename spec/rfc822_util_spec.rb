@@ -22,6 +22,12 @@ describe "Rfc822Util" do
         Rfc822Util.extract_journalled_mail(s)
       }.should raise_error(/has no attachments/)
     end
+
+    it "should log return the given mail if there is no X-MS-Journal-Report header" do
+      s=File.read(File.expand_path("../fixtures/email_with_no_x_ms_journal_header.eml", __FILE__))
+      jm = Rfc822Util.extract_journalled_mail(s)
+      jm.message_id.should == "<6612CEDB-F33D-4588-83C5-AFB2B28FD85A@empire42.com>"
+    end
   end
 
   describe "discard_mail_body" do

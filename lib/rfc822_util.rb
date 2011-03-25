@@ -15,11 +15,15 @@ module Rfc822Util
 
   module_function
 
-  # extract the first message/rfc822 attachment from the RFC822 encoded content, and return it as a TMail::Mail
+  # if an X-MS-Journal-Report header is present, then extract the first message/rfc822
+  # attachment from the RFC822 encoded content, and return it as a TMail::Mail.
+  # if no X-MS-Journal-Report header is present then return the whole mail.
   # if +strip_content+ is true then message content will be discarded, and only headers processed
   def extract_journalled_mail(mail, strip_content=true)
     journal_mail = TMail::Mail.parse(mail) if mail.is_a?(String)
     
+    return journal_mail if !journal_mail['X-MS-Journal-Report'] # it's not really a journal mail
+
     # get the attachment
     attachment = journal_mail.parts.select{ |p| p.content_disposition == "attachment" || p.content_type == "message/rfc822" }.first
     

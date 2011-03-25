@@ -12,5 +12,6 @@ Content-Transfer-Encoding: 7bit
 Message-Id: <B63CAA43-F378-4033-BA8B-ED408805B5B5@empire42.com>
 X-Uniform-Type-Identifier: com.apple.mail-draft
 To: foo@bar.com
+X-MS-Journal-Report:
 
 <html><head></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space; ">Plain email with no attachments.</body></html>
